@@ -23,6 +23,9 @@ class BaseInput extends BasicComponent {
     super.componentDidMount();
     const node = ReactDOM.findDOMNode(this);
 
+    if (typeof this.props.checked !== 'undefined') {
+      node.checked = this.props.checked;
+    }
     if (this.props.value !== undefined) {
       node.value = this.props.value;
     }
@@ -35,15 +38,17 @@ class BaseInput extends BasicComponent {
     this.EVENT_TYPES.forEach(eventType => node.removeEventListener(eventType, this.onChange));
   }
 
-  componentWillReceiveProps(props) {
+  componentDidUpdate() {
+    super.componentDidUpdate();
+
     const node = ReactDOM.findDOMNode(this);
 
-    if (typeof props.value !== 'undefined' && node.value !== props.value) {
-      node.value = props.value;
+    if (typeof this.props.value !== 'undefined' && node.value !== this.props.value) {
+      node.value = this.props.value;
     }
 
-    if (typeof props.checked !== 'undefined') {
-      node.checked = props.checked;
+    if (typeof this.props.checked !== 'undefined') {
+      node.checked = this.props.checked;
     }
   }
 
